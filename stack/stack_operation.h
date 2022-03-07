@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 15:56:13 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/07 01:11:30 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/07 05:01:45 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 typedef struct s_stack
 {
 	t_list_double *list;
-	const char name;
+	char name;
+	char str_push[3];
+	char str_swap[3];
+	char str_rot[3];
+	char str_rot_rev[4];
 }	t_stack;
 
-//replace the char at pos by another one ("px\n", 3, 'b', 1) -> "pb\n"
-void	write_op(char *str, int strlen, char replace_char, int replace_pos);
+/* Initialisation */
+t_stack	stack_init(char name);
 
 /* Operation */
 
