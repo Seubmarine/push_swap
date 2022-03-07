@@ -6,78 +6,30 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/01/29 17:42:22 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/07 02:09:05 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-#include <stdio.h>
-
-void	test_next(t_list_double *l)
-{
-	t_list_double *first_chain;
-
-	first_chain = l;
-	printf("\ntest next : \n");
-	while (1)
-	{
-		printf("%s\n", l->num);
-		l = l->next;
-		if (l == first_chain)
-			break ;
-	}
-	return ;
-}
-
-void	test_prev(t_list_double *l)
-{
-	t_list_double *first_chain;
-	
-	first_chain = l;
-	printf("\ntest prev : \n");
-	while (1)
-	{
-		printf("%s\n", l->num);
-		l = l->prev;
-		if (l == first_chain)
-			break ;
-	}
-}
-
-void link_end(t_list_double *begin, t_list_double *end)
-{
-	begin->prev = end;
-	begin->next = begin + 1;
-	end->next = begin;
-	end->prev = end - 1;
-}
+#include "list_double.h"
 
 int main(int argc, char **argv)
 {
-	t_list_double	*m_array_list;
-	t_list_double	*current_list;
-	size_t			i;
+	t_list_double *m_list_array;
+	t_stack stack_a = {.list = NULL, .name = 'a'};
+	t_stack stack_b = {.list = NULL, .name = 'b'};
 
-	argc--;
-	argv++;
-	m_array_list = malloc(sizeof(*m_array_list) * argc);
-	if (!m_array_list)
+	if (argc == 1)
 		return (1);
-	link_end(m_array_list, &m_array_list[argc - 1]);
-	m_array_list->num = argv[0];
-	(&m_array_list[argc - 1])->num = argv[argc - 1];
-	i = 1;
-	while (i < argc - 1)
-	{
-		current_list = &m_array_list[i];
-		current_list->next = &m_array_list[i + 1];
-		current_list->num = argv[i];
-		current_list->prev = &m_array_list[i - 1];
-		i++;
-	}
-	test_next(m_array_list);
-	test_prev(m_array_list);
-	free(m_array_list);
+	m_list_array = malloc(sizeof(*m_list_array) * (argc - 1));
+	if (!m_list_array)
+		return (1);
+	stack_a.list = lstd_create(m_list_array, argc - 1, argv + 1);
+	rot(&stack_a);
+	//lstd_push_front(&stack_b, lstd_pop_front(&stack_a));
+	//stack_swap(&stack_a);
+	test_next(stack_a.list);
+	test_next(stack_b.list);
+	free(m_list_array);
 	return (0);
 }
