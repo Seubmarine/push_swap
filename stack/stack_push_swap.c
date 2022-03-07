@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 15:43:23 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/07 05:09:24 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/07 06:14:33 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-t_stack stack_init(char name)
+t_stack	stack_init(char name)
 {
-	t_stack stack;
+	t_stack	stack;
 
 	stack.list = NULL;
 	stack.name = name;
@@ -47,21 +47,21 @@ t_stack stack_init(char name)
 }
 
 //print "p+name_of_stack1" and push stack1 in stack0
-void push(t_stack *stack0, t_stack *stack1)
+void	push(t_stack *stack0, t_stack *stack1)
 {
 	write(1, stack0->str_push, 3);
 	lstd_push(&stack0->list, &stack1->list);
 }
 
 //print "s+name_of_stack" and swap first two element of the stack
-void swap(t_stack *stack)
+void	swap(t_stack *stack)
 {
 	write(1, stack->str_swap, 3);
 	lstd_swap(&stack->list);
 }
 
 //print "ss" and swap first two element for each stack
-void swap_swap(t_stack *stack0, t_stack *stack1)
+void	swap_swap(t_stack *stack0, t_stack *stack1)
 {
 	write(1, "ss\n", 3);
 	lstd_swap(&stack0->list);

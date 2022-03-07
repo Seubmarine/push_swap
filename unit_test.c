@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:00:03 by tbousque          #+#    #+#             */
-/*   Updated: 2022/02/21 13:01:50 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/07 05:50:48 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	test_next(t_list_double *l)
 {
-	t_list_double *first_chain;
+	t_list_double	*first_chain;
 
 	first_chain = l;
 	if (!l)
@@ -36,8 +36,8 @@ void	test_next(t_list_double *l)
 
 void	test_prev(t_list_double *l)
 {
-	t_list_double *first_chain;
-	
+	t_list_double	*first_chain;
+
 	l = l->prev;
 	first_chain = l;
 	printf("test prev : \n");

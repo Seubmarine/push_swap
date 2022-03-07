@@ -6,18 +6,19 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 01:56:29 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/07 01:57:29 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/07 06:08:08 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list_double.h"
 
 //argv point to first arg to use
-t_list_double *lstd_create(t_list_double *m_list_array, int n_arg, char **char_list)
+t_list_double	*lstd_create(t_list_double *m_list_array, int n_arg, \
+	char **char_list)
 {
 	t_list_double	*last;
 	t_list_double	*current;
-	int		i;
+	int				i;
 
 	last = NULL;
 	current = NULL;
@@ -35,5 +36,3 @@ t_list_double *lstd_create(t_list_double *m_list_array, int n_arg, char **char_l
 	lstd_link(last, current);
 	return (current);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 15:56:13 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/07 05:01:45 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/07 06:13:50 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 
 typedef struct s_stack
 {
-	t_list_double *list;
-	char name;
-	char str_push[3];
-	char str_swap[3];
-	char str_rot[3];
-	char str_rot_rev[4];
+	t_list_double	*list;
+	char			name;
+	char			str_push[3];
+	char			str_swap[3];
+	char			str_rot[3];
+	char			str_rot_rev[4];
 }	t_stack;
 
 /* Initialisation */

@@ -6,13 +6,13 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:03:23 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/06 23:33:54 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/07 06:06:17 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list_double.h"
 
-void lstd_link(t_list_double *chain0, t_list_double *chain1)
+void	lstd_link(t_list_double *chain0, t_list_double *chain1)
 {
 	if (chain0)
 		chain0->next = chain1;
@@ -29,7 +29,6 @@ void	lstd_swap(t_list_double **stack)
 	first = *stack;
 	second = first->next;
 	mem_num = first->num;
-
 	first->num = second->num;
 	second->num = mem_num;
 }
@@ -65,7 +64,7 @@ void	lstd_push_front(t_list_double **list, t_list_double *pushed)
 	*list = pushed;
 }
 
-void lstd_push(t_list_double **stack_a, t_list_double **stack_b)
+void	lstd_push(t_list_double **stack_a, t_list_double **stack_b)
 {
 	lstd_push_front(stack_a, lstd_pop_front(stack_b));
 }
