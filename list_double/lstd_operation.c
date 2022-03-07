@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:03:23 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/07 06:06:17 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/07 07:28:26 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	lstd_swap(t_list_double **stack)
 	t_list_double	*second;
 	char			*mem_num;
 
+	if (!*stack)
+		return ;
 	first = *stack;
 	second = first->next;
 	mem_num = first->num;
@@ -37,6 +39,8 @@ t_list_double	*lstd_pop_front(t_list_double **stack)
 {
 	t_list_double	*poped;
 
+	if (!*stack)
+		return (NULL);
 	poped = *stack;
 	if (poped == poped->next)
 		*stack = NULL;
@@ -52,6 +56,8 @@ t_list_double	*lstd_pop_front(t_list_double **stack)
 
 void	lstd_push_front(t_list_double **list, t_list_double *pushed)
 {
+	if (!pushed)
+		return ;
 	if (!*list)
 	{
 		lstd_link(pushed, pushed);
