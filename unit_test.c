@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 13:00:03 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/08 04:30:29 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/16 14:11:22 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void	test_next(t_list_double *l)
 		printf("Stack empty!\n");
 		return ;
 	}
-	printf("test next : \n");
 	while (1)
 	{
-		printf("%i\n", l->num);
+		printf("%i ", l->num);
 		l = l->next;
 		if (l == first_chain)
 			break ;
 	}
+	printf("\n");
 	return ;
 }
 
