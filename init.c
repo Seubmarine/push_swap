@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/28 13:09:10 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:52:26 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 
 	i = 1;
 	a_len = 0;
-	if (len <= 2)
+	if (len <= 3)
 	{
 		while (len)
 		{
@@ -102,18 +102,19 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 		}
 		i++;
 	}
+	quick_sort_a(a, b, a_len);
 	i = 0;
 	while (i < len - a_len)
 	{
 		rot_rev(b);
 		i++;
 	}
-	quick_sort_a(a, b, a_len);
 	quick_sort_b(a, b, len - a_len);
 }
 
 void	quick_sort_a(t_stack *a, t_stack *b, int len)
 {
+	static int is_first_pass = 1;
 	int	i;
 	int b_len;
 	const int median = get_median(a, len);
@@ -121,8 +122,13 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 	//print_stack(*a, *b);
 	i = 1;
 	b_len = 0;
-	if (len <= 2)
+	if (len <= 3)
+	{
+		is_first_pass = 0;
+		if (num(a) > num_pos(a, 1))
+			swap(a);
 		return ;
+	}
 	while (i <= len && a && num(a) != num_pos(a, 1))
 	{
 		if (num(a) >= median)
@@ -135,7 +141,7 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 		i++;
 	}
 	i = 0;
-	while (i < len - b_len)
+	while (i < len - b_len && !is_first_pass)
 	{
 		rot_rev(a);
 		i++;
