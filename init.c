@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/28 14:52:26 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/28 22:50:05 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,28 @@ int ft_mid(int a, int b, int c)
 	return (a + b + c - max - min);
 }
 
-//find the best median between the first middle and last elem of the list
+// hacky thing only work if all value are right after another
 int get_median(t_stack *x, int len)
 {
-	const int low = num_pos(x, 0);
-	const int mid = num_pos(x, len / 2);
-	const int high = num_pos(x, len - 1);
-	return (ft_mid(low, mid, high));
+	t_list_double	*current;
+	int		min;
+	int		max;
+	int		i;
+	
+	current = x->list;
+	min = current->num;
+	max = current->num;
+	i = 0;
+	while (i < len)
+	{
+		if (min > current->num)
+			min = current->num;
+		if (max < current->num)
+			max = current->num;
+		current = current->next;
+		i++;
+	}
+	return (min + (max - min) / 2);
 }
 
 void	quick_sort_a(t_stack *a, t_stack *b, int len);
@@ -93,7 +108,7 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 	}
 	while (i <= len && b && num(b) != num_pos(b, 1))
 	{
-		if (num(b) <= median)
+		if (num(b) < median + 1)
 			rot(b);
 		else
 		{
@@ -119,19 +134,16 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 	int b_len;
 	const int median = get_median(a, len);
 
-	//print_stack(*a, *b);
 	i = 1;
 	b_len = 0;
 	if (len <= 3)
 	{
 		is_first_pass = 0;
-		if (num(a) > num_pos(a, 1))
-			swap(a);
 		return ;
 	}
 	while (i <= len && a && num(a) != num_pos(a, 1))
 	{
-		if (num(a) >= median)
+		if (num(a) > median)
 			rot(a);
 		else
 		{
