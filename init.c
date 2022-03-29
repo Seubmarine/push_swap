@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/30 00:46:05 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/30 01:42:03 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ int	main(int argc, char **argv)
 		op_vector_applyf(&m_vec_op, &op_print);
 		//print_stack(stack_a, stack_b);
 	}
+	op_vector_free(&m_vec_op);
 	free(m_list_array);
 	return (0);
 }
