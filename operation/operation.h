@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 23:09:38 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/29 23:46:39 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/30 00:41:25 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 
 enum e_op
 {
-    rot_rot = -5,
-    swap_a = -4,
-    push_a = -3,
-    rev_rot_a = -2,
-    rev_rot_b = -1,
-    no_op = 0,
-    rot_b = 1,
-    rot_a = 2,
-    push_b = 3,
-    swap_b = 4,
-    rev_rot_rot = 5,
-    swap_swap = 6,
+    op_rot_rot = -5,
+    op_swap_a = -4,
+    op_push_a = -3,
+    op_rev_rot_a = -2,
+    op_rev_rot_b = -1,
+    op_nothing = 0,
+    op_rot_b = 1,
+    op_rot_a = 2,
+    op_push_b = 3,
+    op_swap_b = 4,
+    op_rev_rot_rot = 5,
+    op_swap_swap = 6,
 };
 
 typedef struct s_op_vector
