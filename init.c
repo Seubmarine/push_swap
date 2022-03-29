@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/28 23:44:17 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/30 00:46:05 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ void	algo(t_stack *a, t_stack *b, int len)
 int	main(int argc, char **argv)
 {
 	t_list_double	*m_list_array;
+	t_op_vector		m_vec_op;
 	t_stack			stack_a;
 	t_stack			stack_b;
 
@@ -181,12 +182,14 @@ int	main(int argc, char **argv)
 	m_list_array = malloc(sizeof(*m_list_array) * (argc - 1));
 	if (!m_list_array)
 		return (1);
-	stack_a = stack_init('a');
-	stack_b = stack_init('b');
+	op_vector_init(&m_vec_op, 6000);
+	stack_a = stack_init('a', &m_vec_op);
+	stack_b = stack_init('b', &m_vec_op);
 	stack_a.list = lstd_create(m_list_array, argc - 1, argv + 1);
 	if (stack_a.list)
 	{	
 		algo(&stack_a, &stack_b, argc - 1);
+		op_vector_applyf(&m_vec_op, &op_print);
 		//print_stack(stack_a, stack_b);
 	}
 	free(m_list_array);
