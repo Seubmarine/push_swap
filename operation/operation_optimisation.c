@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 23:40:35 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/30 00:43:15 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/03/30 01:00:16 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ static enum e_op _op_vector_merge_double(enum e_op current, enum e_op previous)
 
 void op_vector_push_back(t_op_vector *vec, enum e_op current)
 {
+	#if OPERATION_OPTIMISATION
 	enum e_op previous;
 	enum e_op new_current_if_merge;
 
-    #if OPERATION_OPTIMISATION
 	if (vec->len > 0)
 	{
 		previous = vec->array[vec->len - 1];
