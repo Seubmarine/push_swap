@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/04/02 17:25:23 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/04/02 23:26:50 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,13 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 			len--;
 		}
 	}
-	if (len <= 3)
+	if (len == 3)
 	{
-		if (len == 3)
-		{
-			three_sort_b(a, b);
-			return ;
-		}
+		three_sort_b(a, b);
+		return ;
+	}
+	if (len <= 2)
+	{
 		while (len)
 		{
 			push(a, b);
@@ -166,7 +166,6 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 		}
 		i++;
 	}
-	quick_sort_a(a, b, a_len);
 	i = 0;
 	if (num_pos(b, len - a_len) != num(b))
 	{
@@ -176,6 +175,7 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 			i++;
 		}
 	}
+	quick_sort_a(a, b, a_len);
 	quick_sort_b(a, b, len - a_len);
 }
 
@@ -202,7 +202,7 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 	}
 	while (i <= len && a && num(a) != num_pos(a, 1))
 	{
-		if (num(a) > median - 1)
+		if (num(a) > median)
 			rot(a);
 		else
 		{
