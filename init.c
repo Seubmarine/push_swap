@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/04/02 23:26:50 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/04/03 01:33:34 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,14 +131,6 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 
 	i = 1;
 	a_len = 0;
-	if (b_is_sorted(b, len))
-	{
-		while (len)
-		{
-			push(a, b);
-			len--;
-		}
-	}
 	if (len == 3)
 	{
 		three_sort_b(a, b);
@@ -155,9 +147,18 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 			swap(a);
 		return ;
 	}
+	if (b_is_sorted(b, len))
+	{
+		while (len)
+		{
+			push(a, b);
+			len--;
+		}
+		return ;
+	}
 	while (i <= len && b && num(b) != num_pos(b, 1))
 	{
-		if (num(b) <= median)
+		if (num(b) <= median + 1)
 			rot(b);
 		else
 		{
@@ -166,6 +167,7 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 		}
 		i++;
 	}
+	quick_sort_a(a, b, a_len);
 	i = 0;
 	if (num_pos(b, len - a_len) != num(b))
 	{
@@ -175,7 +177,6 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 			i++;
 		}
 	}
-	quick_sort_a(a, b, a_len);
 	quick_sort_b(a, b, len - a_len);
 }
 
@@ -187,8 +188,6 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 
 	i = 1;
 	b_len = 0;
-	if (a_is_sorted(a, len))
-		return ;
 	if (len == 3)
 	{	
 		three_sort_a(a, num(a), num_pos(a, 1), num_pos(a, 2));
@@ -200,6 +199,8 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 			swap(a);
 		return ;
 	}
+	if (a_is_sorted(a, len))
+		return ;
 	while (i <= len && a && num(a) != num_pos(a, 1))
 	{
 		if (num(a) > median)
