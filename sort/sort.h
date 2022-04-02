@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   sort.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 15:22:59 by tbousque          #+#    #+#             */
-/*   Updated: 2022/04/01 11:48:31 by tbousque         ###   ########.fr       */
+/*   Created: 2022/04/01 11:42:57 by tbousque          #+#    #+#             */
+/*   Updated: 2022/04/01 12:33:37 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-# include <stdlib.h>
-# include <stddef.h>
+#ifndef SORT_H
+# define SORT_H
 # include "stack_operation.h"
-# include "sort.h"
-/* Unit test */
-void	test_next(t_list_double *l);
-void	test_prev(t_list_double *l);
+# include "operation.h"
+void    three_sort_a(t_stack *x, int a, int b, int c);
+void    three_sort_b(t_stack *a, t_stack *b);
 #endif

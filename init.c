@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/30 01:42:03 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/04/02 17:25:23 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,40 @@ int get_median(t_stack *x, int len)
 	return (min + (max - min) / 2);
 }
 
+int a_is_sorted(t_stack *x, int len)
+{
+	int				i;
+	t_list_double	*current;
+
+	i = 0;
+	current = x->list;
+	while (i < (len - 1))
+	{
+		if (current->num > current->next->num)
+			return (0);
+		current = current->next;
+		i++;
+	}
+	return (1);
+}
+
+int b_is_sorted(t_stack *x, int len)
+{
+	int				i;
+	t_list_double	*current;
+
+	i = 0;
+	current = x->list;
+	while (i < (len - 1))
+	{
+		if (current->num < current->next->num)
+			return (0);
+		current = current->next;
+		i++;
+	}
+	return (1);
+}
+
 void	quick_sort_a(t_stack *a, t_stack *b, int len);
 
 void	quick_sort_b(t_stack *a, t_stack *b, int len)
@@ -97,18 +131,33 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 
 	i = 1;
 	a_len = 0;
-	if (len <= 3)
+	if (b_is_sorted(b, len))
 	{
 		while (len)
 		{
 			push(a, b);
 			len--;
 		}
+	}
+	if (len <= 3)
+	{
+		if (len == 3)
+		{
+			three_sort_b(a, b);
+			return ;
+		}
+		while (len)
+		{
+			push(a, b);
+			len--;
+		}
+		if (num(a) > num_pos(a, 1))
+			swap(a);
 		return ;
 	}
 	while (i <= len && b && num(b) != num_pos(b, 1))
 	{
-		if (num(b) < median + 1)
+		if (num(b) <= median)
 			rot(b);
 		else
 		{
@@ -138,11 +187,22 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 
 	i = 1;
 	b_len = 0;
-	if (len <= 3)
+	if (a_is_sorted(a, len))
 		return ;
+	if (len == 3)
+	{	
+		three_sort_a(a, num(a), num_pos(a, 1), num_pos(a, 2));
+		return ;
+	}
+	else if (len <= 2)
+	{
+		if (num(a) > num_pos(a, 1))
+			swap(a);
+		return ;
+	}
 	while (i <= len && a && num(a) != num_pos(a, 1))
 	{
-		if (num(a) > median)
+		if (num(a) > median - 1)
 			rot(a);
 		else
 		{
@@ -189,6 +249,9 @@ int	main(int argc, char **argv)
 	if (stack_a.list)
 	{	
 		algo(&stack_a, &stack_b, argc - 1);
+		//rot(&stack_a);
+		//three_sort_a(&stack_a, num(&stack_a), num_pos(&stack_a, 1), num_pos(&stack_a, 2));
+		//rot_rev(&stack_a);
 		op_vector_applyf(&m_vec_op, &op_print);
 		//print_stack(stack_a, stack_b);
 	}
