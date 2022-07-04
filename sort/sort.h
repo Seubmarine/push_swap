@@ -14,8 +14,9 @@
 # define SORT_H
 # include "stack_operation.h"
 # include "operation.h"
-void    three_sort_alone_b(t_stack *a, t_stack *b);
-void    three_sort_alone_a(t_stack *a);
-void    three_sort_a(t_stack *x, int a, int b, int c);
-void    three_sort_b(t_stack *a, t_stack *b);
+
+void	three_sort_alone_b(t_stack *a, t_stack *b);
+void	three_sort_alone_a(t_stack *a);
+void	three_sort_a(t_stack *x, int a, int b, int c);
+void	three_sort_b(t_stack *a, t_stack *b);
 #endif
