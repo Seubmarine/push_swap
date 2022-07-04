@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_qsort.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 15:22:59 by tbousque          #+#    #+#             */
-/*   Updated: 2022/04/01 11:48:31 by tbousque         ###   ########.fr       */
+/*   Created: 2022/06/22 17:50:47 by tbousque          #+#    #+#             */
+/*   Updated: 2022/06/22 23:08:58 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-# include <stdlib.h>
-# include <stddef.h>
-# include "stack_operation.h"
-# include "sort.h"
-# include "ft_qsort.h"
-/* Unit test */
-void	test_next(t_list_double *l);
-void	test_prev(t_list_double *l);
+#ifndef FT_QSORT_H
+# define FT_QSORT_H
+
+# include "stddef.h"
+# include "stdint.h"
+
+struct s_qsort_args
+{
+	size_t	type_size;
+	int		(*compar)(const void *, const void *);
+};
+
+void	ft_qsort(void *base, size_t nmemb, size_t size,
+			int (*compar)(const void *, const void *));
+
 #endif

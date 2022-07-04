@@ -13,7 +13,7 @@
 NAME = push_swap
 
 CC = gcc
-CFLAGS = -g3 -Wall -Wextra -Werror -I ft_std/ -I list_double/ -I stack/ -I operation/ -I sort/#-fsanitize=address
+CFLAGS = -g3 -Wall -Wextra -Werror -I ft_std/ -I list_double/ -I stack/ -I operation/ -I sort/ -I ft_qsort/#-fsanitize=address
 
 SRCS_LIBFT = ft_strtoll.c
 SRCS_DOUBLE_LIST = lstd_operation.c lstd_rotation.c lstd_creation.c
