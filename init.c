@@ -231,6 +231,43 @@ void	algo(t_stack *a, t_stack *b, int len)
 	quick_sort_a(a, b, len);
 }
 
+
+size_t	str_count_word(char *str)
+{
+	size_t	word_count;
+	size_t	i;
+
+	word_count = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] != ' ')
+		{
+			word_count++;
+			while (str[i] != '\0' && str[i] != ' ')
+				i++;
+		}
+		else
+			i++;
+	}
+	return (word_count);
+}
+
+size_t	get_total_arg_count(int argc, char **argv)
+{
+	int		i;
+	size_t	count;
+
+	i = 0;
+	count = 0;
+	while (i < argc)
+	{
+		count += str_count_word(argv[i]);
+		i++;
+	}
+	return (count);
+}
+
 int	main(int argc, char **argv)
 {
 	t_list_double	*m_list_array;
@@ -240,7 +277,8 @@ int	main(int argc, char **argv)
 
 	if (argc == 1)
 		return (1);
-	m_list_array = malloc(sizeof(*m_list_array) * (argc - 1));
+	printf("argnum: %li\n", get_total_arg_count(argc - 1, argv + 1));
+	m_list_array = malloc(sizeof(*m_list_array) * get_total_arg_count(argc - 1, argv + 1));
 	if (!m_list_array)
 		return (1);
 	op_vector_init(&m_vec_op, 6000);
