@@ -30,7 +30,7 @@ t_list_double	*lstd_create(t_list_double *m_list_array, int n_arg, \
 		current = &(m_list_array[i]);
 		current->num_str = char_list[i];
 		lltoi = ft_strtoll(char_list[i], &strtoll_end, 10);
-		if (!*strtoll_end || lltoi > INT_MAX || lltoi < INT_MIN)
+		if (*strtoll_end || lltoi > INT_MAX || lltoi < INT_MIN)
 			return (NULL);
 		current->num = (int) lltoi;
 		lstd_link(last, current);
