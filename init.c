@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/06/02 06:53:34 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/12 17:08:06 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,42 @@ size_t	get_total_arg_count(int argc, char **argv)
 	return (count);
 }
 
+#include <string.h>
+char **create_char_list(int argc, char **argv, size_t num_count)
+{
+	char **char_list;
+	
+	char_list = malloc(sizeof(*char_list) * num_count);
+	if (num_count == (size_t)argc)
+	{
+		memcpy(char_list, argv, sizeof(*argv) * argc);
+		return (char_list);
+	}
+	size_t	i = 0;
+	size_t j = 0;
+	char *str = *argv;
+	while (i < num_count)
+	{
+		while (str[j] == ' ')
+			j++;
+		char_list[i] = str + j;
+		while (str[j] == '-' || (str[j] >= '0' && str[j] <= '9'))
+			j++;
+		if (str[j] == '\0')
+		{
+			j = 0;
+			str = *(++argv);
+		}
+		else
+		{
+			str[j] = '\0';
+			j++;
+		}
+		i++;
+	}
+	return (char_list);
+}
+
 int	main(int argc, char **argv)
 {
 	t_list_double	*m_list_array;
@@ -277,17 +313,19 @@ int	main(int argc, char **argv)
 
 	if (argc == 1)
 		return (1);
-	printf("argnum: %li\n", get_total_arg_count(argc - 1, argv + 1));
-	m_list_array = malloc(sizeof(*m_list_array) * get_total_arg_count(argc - 1, argv + 1));
+	//printf("argnum: %li\n", get_total_arg_count(argc - 1, argv + 1));
+	size_t num_count = get_total_arg_count(argc - 1, argv + 1);
+	m_list_array = malloc(sizeof(*m_list_array) * num_count);
 	if (!m_list_array)
 		return (1);
-	op_vector_init(&m_vec_op, 6000);
+	op_vector_init(&m_vec_op, 20000); // TODO: grow dynamicly with time
 	stack_a = stack_init('a', &m_vec_op);
 	stack_b = stack_init('b', &m_vec_op);
-	stack_a.list = lstd_create(m_list_array, argc - 1, argv + 1);
+	char **char_list = create_char_list(argc - 1, argv + 1, num_count);
+	stack_a.list = lstd_create(m_list_array, num_count, char_list);
 	if (stack_a.list)
 	{	
-		algo(&stack_a, &stack_b, argc - 1);
+		algo(&stack_a, &stack_b, num_count);
 		//rot(&stack_a);
 		//three_sort_a(&stack_a, num(&stack_a), num_pos(&stack_a, 1), num_pos(&stack_a, 2));
 		//rot_rev(&stack_a);
@@ -295,6 +333,7 @@ int	main(int argc, char **argv)
 		//print_stack(stack_a, stack_b);
 	}
 	op_vector_free(&m_vec_op);
+	free(char_list);
 	free(m_list_array);
 	return (0);
 }
