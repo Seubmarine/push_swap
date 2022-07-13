@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/12 17:08:06 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/13 05:32:56 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,6 +304,14 @@ char **create_char_list(int argc, char **argv, size_t num_count)
 	return (char_list);
 }
 
+int compar(const void *a, const void *b)
+{
+	const t_list_double **ap = (void *)a;
+	const t_list_double **bp = (void *)b;
+
+	return ((*ap)->num - (*bp)->num);
+}
+
 int	main(int argc, char **argv)
 {
 	t_list_double	*m_list_array;
@@ -323,6 +331,21 @@ int	main(int argc, char **argv)
 	stack_b = stack_init('b', &m_vec_op);
 	char **char_list = create_char_list(argc - 1, argv + 1, num_count);
 	stack_a.list = lstd_create(m_list_array, num_count, char_list);
+	
+	t_list_double **list_array_copy = malloc(sizeof(*list_array_copy) * num_count);
+	for (size_t i = 0; i < num_count; i++)
+	{
+		list_array_copy[i] = &m_list_array[i];
+	}
+	ft_qsort(list_array_copy, num_count, sizeof(*list_array_copy), compar);
+	for (size_t i = 0; i < num_count; i++)
+	{
+		// int tmp = list_array_copy[i]->num;
+		// printf("%i ", tmp);
+		list_array_copy[i]->num = i;
+	}
+	// printf("\n");
+	free(list_array_copy);
 	if (stack_a.list)
 	{	
 		algo(&stack_a, &stack_b, num_count);
