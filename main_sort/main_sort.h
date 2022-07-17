@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   main_sort.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 15:22:59 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 00:24:35 by tbousque         ###   ########.fr       */
+/*   Created: 2022/07/18 00:04:47 by tbousque          #+#    #+#             */
+/*   Updated: 2022/07/18 00:24:20 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-# include <stdlib.h>
-# include <stddef.h>
+#ifndef MAIN_SORT_H
+# define MAIN_SORT_H
+# include "list_double.h"
 # include "stack_operation.h"
-# include "main_sort.h"
-# include "sort.h"
-# include "ft_qsort.h"
-/* Unit test */
-void	test_next(t_list_double *l);
-void	test_prev(t_list_double *l);
+
+int	num_pos(t_stack *x, int n);
+int	num(t_stack *x);
+int	get_median(t_stack *x, int len);
+int	a_is_sorted(t_stack *x, int len);
+int	b_is_sorted(t_stack *x, int len);
+
 #endif
