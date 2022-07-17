@@ -6,14 +6,13 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 23:40:35 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/30 01:00:16 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/17 14:16:50 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "operation.h"
 
-#if OPERATION_OPTIMISATION
-static void _op_vector_remove_double(t_op_vector *vec, enum e_op current)
+static void	_op_vector_remove_double(t_op_vector *vec, enum e_op current)
 {
 	if (current == op_swap_swap)
 		vec->len--;
@@ -28,23 +27,25 @@ static void _op_vector_remove_double(t_op_vector *vec, enum e_op current)
 }
 
 // return 1 if a merge as occured
-static enum e_op _op_vector_merge_double(enum e_op current, enum e_op previous)
+static enum e_op	_op_vector_merge_double(enum e_op current, \
+	enum e_op previous)
 {
-	if ((current == op_swap_a && previous == op_swap_b) || (current == op_swap_b && previous == op_swap_a))
+	if ((current == op_swap_a && previous == op_swap_b) || \
+		(current == op_swap_b && previous == op_swap_a))
 		return (op_swap_swap);
-	if ((current == op_rot_a && previous == op_rot_b) || (current == op_rot_b && previous == op_rot_a))
+	if ((current == op_rot_a && previous == op_rot_b) || \
+		(current == op_rot_b && previous == op_rot_a))
 		return (op_rot_rot);
-	else if ((current == op_rev_rot_a && previous == op_rev_rot_b) || (current == op_rev_rot_b && previous == op_rev_rot_a))
+	else if ((current == op_rev_rot_a && previous == op_rev_rot_b) \
+		|| (current == op_rev_rot_b && previous == op_rev_rot_a))
 		return (op_rev_rot_rot);
 	return (op_nothing);
 }
-#endif
 
-void op_vector_push_back(t_op_vector *vec, enum e_op current)
+void	op_vector_push_back(t_op_vector *vec, enum e_op current)
 {
-	#if OPERATION_OPTIMISATION
-	enum e_op previous;
-	enum e_op new_current_if_merge;
+	enum e_op	previous;
+	enum e_op	new_current_if_merge;
 
 	if (vec->len > 0)
 	{
@@ -54,15 +55,14 @@ void op_vector_push_back(t_op_vector *vec, enum e_op current)
 		{
 			vec->len--;
 			op_vector_push_back(vec, new_current_if_merge);
-			return;
+			return ;
 		}
 		if (current + previous == 0)
 		{
 			_op_vector_remove_double(vec, current);
-			return;
+			return ;
 		}
 	}
-    #endif
 	vec->array[vec->len] = current;
 	vec->len++;
 }

@@ -6,14 +6,14 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 15:36:19 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/29 23:47:34 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/17 14:27:07 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "operation.h"
 
 // return 0 on failure
-int op_vector_init(t_op_vector *vec, size_t capacity)
+int	op_vector_init(t_op_vector *vec, size_t capacity)
 {
 	vec->array = malloc(sizeof(*(vec->array)) * capacity);
 	if (vec->array == NULL)
@@ -23,15 +23,15 @@ int op_vector_init(t_op_vector *vec, size_t capacity)
 	return (1);
 }
 
-void op_vector_free(t_op_vector *vec)
+void	op_vector_free(t_op_vector *vec)
 {
 	vec->len = 0;
 	free(vec->array);
 }
 
-void op_vector_applyf(t_op_vector *vec, void (*func)(enum e_op))
+void	op_vector_applyf(t_op_vector *vec, void (*func)(enum e_op))
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < vec->len)
@@ -41,16 +41,11 @@ void op_vector_applyf(t_op_vector *vec, void (*func)(enum e_op))
 	}
 }
 
-void op_print(enum e_op op)
+void	op_print(enum e_op op)
 {
-#if DEBUG
-	const char *string_op[12] = {"rot_rot", "swap_a", "push_a", "rev_rot_a", "rev_rot_b", "no_op", "rot_b",
-								 "rot_a", "push_b", "swap_b", "rev_rot_rot", "swap_swap"};
-#else
-	const char *string_op[12] = {"rr", "sa", "pa", "rra", "rrb", "no_op", "rb",
-								 "ra", "pb", "sb", "rrr", "ss"};
-#endif
-	const char *t = string_op[op + 5];
+	const char		*string_op[12] = {"rr\n", "sa\n", "pa\n", "rra\n", "rrb\n",
+					"no_op\n", "rb\n", "ra\n", "pb\n", "sb\n", "rrr\n", "ss\n"};
+	const size_t	size_op[12] = {3, 3, 3, 4, 4, 6, 3, 3, 3, 3, 4, 3};
 
-	printf("%s\n", t);
+	write(1, string_op[op + 5], size_op[op + 5]);
 }
