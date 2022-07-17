@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 15:22:59 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 00:35:52 by tbousque         ###   ########.fr       */
+/*   Created: 2022/07/18 00:33:51 by tbousque          #+#    #+#             */
+/*   Updated: 2022/07/18 00:36:07 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
-# include <stdlib.h>
-# include <stddef.h>
-# include "list_double.h"
-# include "libft.h"
-# include "stack_operation.h"
-# include "main_sort.h"
-# include "sort.h"
-# include "ft_qsort.h"
-/* Unit test */
-void	test_next(t_list_double *l);
-void	test_prev(t_list_double *l);
-#endif
+#include "libft.h"
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	char		*d;
+	const char	*s;
+
+	d = dest;
+	s = src;
+	if (dest == NULL && src == NULL)
+		return (dest);
+	while (n > 0)
+	{
+		*d++ = *s++;
+		n--;
+	}
+	return (dest);
+}

@@ -6,21 +6,19 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 00:25:35 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 00:36:11 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "list_double.h"
-#include <stdio.h>
 
 void	quick_sort_a(t_stack *a, t_stack *b, int len);
 
 void	quick_sort_b(t_stack *a, t_stack *b, int len)
 {
-	int	i;
-	int a_len;
-	const int median = get_median(b, len);
+	int			i;
+	int			a_len;
+	const int	median = get_median(b, len);
 
 	i = 1;
 	a_len = 0;
@@ -75,9 +73,9 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 
 void	quick_sort_a(t_stack *a, t_stack *b, int len)
 {
-	int	i;
-	int b_len;
-	const int median = get_median(a, len);
+	int			i;
+	int			b_len;
+	const int	median = get_median(a, len);
 
 	i = 1;
 	b_len = 0;
@@ -118,13 +116,6 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 	quick_sort_b(a, b, b_len);
 }
 
-
-void	algo(t_stack *a, t_stack *b, int len)
-{
-	quick_sort_a(a, b, len);
-}
-
-
 size_t	str_count_word(char *str)
 {
 	size_t	word_count;
@@ -161,7 +152,6 @@ size_t	get_total_arg_count(int argc, char **argv)
 	return (count);
 }
 
-#include <string.h>
 char **create_char_list(int argc, char **argv, size_t num_count)
 {
 	char **char_list;
@@ -169,7 +159,7 @@ char **create_char_list(int argc, char **argv, size_t num_count)
 	char_list = malloc(sizeof(*char_list) * num_count);
 	if (num_count == (size_t)argc)
 	{
-		memcpy(char_list, argv, sizeof(*argv) * argc);
+		ft_memcpy(char_list, argv, sizeof(*argv) * argc);
 		return (char_list);
 	}
 	size_t	i = 0;
@@ -244,8 +234,8 @@ int	main(int argc, char **argv)
 	}
 	free(list_array_copy);
 	if (stack_a.list)
-	{	
-		algo(&stack_a, &stack_b, num_count);
+	{
+		quick_sort_a(&stack_a, &stack_b, num_count);
 		op_vector_applyf(&m_vec_op, &op_print);
 	}
 	op_vector_free(&m_vec_op);
