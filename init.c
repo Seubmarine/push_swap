@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 00:36:11 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 00:42:24 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,19 +152,24 @@ size_t	get_total_arg_count(int argc, char **argv)
 	return (count);
 }
 
-char **create_char_list(int argc, char **argv, size_t num_count)
+char	**create_char_list(int argc, char **argv, size_t num_count)
 {
-	char **char_list;
-	
+	char	**char_list;
+	size_t	i;
+	size_t	j;
+	char	*str;
+
 	char_list = malloc(sizeof(*char_list) * num_count);
+	if (char_list == NULL)
+		return (NULL);
 	if (num_count == (size_t)argc)
 	{
 		ft_memcpy(char_list, argv, sizeof(*argv) * argc);
 		return (char_list);
 	}
-	size_t	i = 0;
-	size_t j = 0;
-	char *str = *argv;
+	str = *argv;
+	i = 0;
+	j = 0;
 	while (i < num_count)
 	{
 		while (str[j] == ' ')
@@ -208,12 +213,15 @@ int	main(int argc, char **argv)
 	m_list_array = malloc(sizeof(*m_list_array) * num_count);
 	if (!m_list_array)
 		return (1);
-	op_vector_init(&m_vec_op, 20000); // TODO: grow dynamicly with time
 	stack_a = stack_init('a', &m_vec_op);
 	stack_b = stack_init('b', &m_vec_op);
 	char **char_list = create_char_list(argc - 1, argv + 1, num_count);
+	if (char_list == NULL)
+	{
+		free(m_list_array);
+		return (EXIT_FAILURE);
+	}
 	stack_a.list = lstd_create(m_list_array, num_count, char_list);
-	
 	t_list_double **list_array_copy = malloc(sizeof(*list_array_copy) * num_count);
 	for (size_t i = 0; i < num_count; i++)
 	{
@@ -233,6 +241,7 @@ int	main(int argc, char **argv)
 		list_array_copy[i]->num = i;
 	}
 	free(list_array_copy);
+	op_vector_init(&m_vec_op, 20000); // TODO: grow dynamicly with time
 	if (stack_a.list)
 	{
 		quick_sort_a(&stack_a, &stack_b, num_count);
