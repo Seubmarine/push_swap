@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:22:59 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 00:35:52 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:34:28 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "main_sort.h"
 # include "sort.h"
 # include "ft_qsort.h"
+# include "main_sort.h"
 /* Unit test */
 void	test_next(t_list_double *l);
 void	test_prev(t_list_double *l);
