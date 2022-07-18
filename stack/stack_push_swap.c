@@ -6,28 +6,11 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 15:43:23 by tbousque          #+#    #+#             */
-/*   Updated: 2022/03/30 00:42:22 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:08:02 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stack_operation.h"
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	size_t		i;
-	char		*dest_b;
-	const char	*src_b;
-
-	src_b = src;
-	dest_b = dest;
-	i = 0;
-	while (i < n)
-	{
-		dest_b[i] = src_b[i];
-		i++;
-	}
-	return (dest);
-}
 
 t_stack	stack_init(char name, t_op_vector *vec_of_op)
 {

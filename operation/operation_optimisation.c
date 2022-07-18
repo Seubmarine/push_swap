@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 23:40:35 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/17 14:16:50 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:53:06 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,25 @@ static enum e_op	_op_vector_merge_double(enum e_op current, \
 	return (op_nothing);
 }
 
+void	op_vector_grow(t_op_vector *vec)
+{
+	enum e_op	*tmp;
+
+	if (vec->len + 1 > vec->capacity)
+	{
+		tmp = malloc(sizeof(*tmp) * (vec->capacity * 2));
+		if (tmp == NULL)
+		{
+			free(vec->to_free);
+			exit(EXIT_FAILURE);
+		}
+		ft_memcpy(tmp, vec->array, sizeof(*vec->array) * vec->len);
+		free(vec->array);
+		vec->array = tmp;
+		vec->capacity *= 2;
+	}
+}
+
 void	op_vector_push_back(t_op_vector *vec, enum e_op current)
 {
 	enum e_op	previous;
@@ -63,6 +82,7 @@ void	op_vector_push_back(t_op_vector *vec, enum e_op current)
 			return ;
 		}
 	}
+	op_vector_grow(vec);
 	vec->array[vec->len] = current;
 	vec->len++;
 }
