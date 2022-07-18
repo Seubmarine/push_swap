@@ -6,36 +6,16 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:33:14 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 16:05:52 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:23:17 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main_sort.h"
 
-void	push_until(t_stack *a, t_stack *b, int len)
-{
-	while (len)
-	{
-		push(a, b);
-		len--;
-	}
-}
-
-void rot_rev_until(t_stack *x, int len, int stack_len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len - stack_len)
-	{
-		rot_rev(x);
-		i++;
-	}
-}
-
 void	quick_sort_a(t_stack *a, t_stack *b, int len);
 
 void	quick_sort_b_part_2(t_stack *a, t_stack *b, int len);
+
 void	quick_sort_b(t_stack *a, t_stack *b, int len)
 {
 	if (len == 3)
@@ -57,6 +37,7 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 	}
 	quick_sort_b_part_2(a, b, len);
 }
+
 void	quick_sort_b_part_2(t_stack *a, t_stack *b, int len)
 {
 	int			i;
@@ -86,6 +67,7 @@ void	quick_sort_b_part_2(t_stack *a, t_stack *b, int len)
 }
 
 void	quick_sort_a_part_2(t_stack *a, t_stack *b, int len);
+
 void	quick_sort_a(t_stack *a, t_stack *b, int len)
 {
 	if (len == 3)

@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 00:04:47 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 15:35:01 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:24:27 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@ int		a_is_sorted(t_stack *x, int len);
 int		b_is_sorted(t_stack *x, int len);
 void	quick_sort_a(t_stack *a, t_stack *b, int len);
 void	quick_sort_b(t_stack *a, t_stack *b, int len);
+void	push_until(t_stack *a, t_stack *b, int len);
+void	rot_rev_until(t_stack *x, int len, int stack_len);
 
 #endif
