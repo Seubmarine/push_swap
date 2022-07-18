@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 00:42:24 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 15:20:15 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,12 +192,59 @@ char	**create_char_list(int argc, char **argv, size_t num_count)
 	return (char_list);
 }
 
-int compar(const void *a, const void *b)
+int	compar(const void *a, const void *b)
 {
-	const t_list_double **ap = (void *)a;
-	const t_list_double **bp = (void *)b;
+	const t_list_double	**ap = (void *)a;
+	const t_list_double	**bp = (void *)b;
 
 	return ((*ap)->num - (*bp)->num);
+}
+
+//Return NULL if error
+//Will sort the list, find if theres any duplicate and replace number by their sorted index for better
+//median search
+t_list_double **create_sorted_list(t_list_double	*m_list_array, size_t num_count)
+{
+	t_list_double	**list_array_copy;
+	size_t			i;
+
+	list_array_copy = malloc(sizeof(*list_array_copy) * num_count);
+	if (list_array_copy == NULL)
+		return (NULL);
+	i = 0;
+	while (i < num_count)
+	{
+		list_array_copy[i] = &m_list_array[i];
+		i++;
+	}
+	ft_qsort(list_array_copy, num_count, sizeof(*list_array_copy), compar);
+	return (list_array_copy);
+}
+
+// return 1 on success 0 on error
+int sort_and_verify_arg(t_list_double	*m_list_array, size_t num_count)
+{
+	size_t i;
+	t_list_double **list_array_copy;
+	
+	list_array_copy = create_sorted_list(m_list_array, num_count);
+	if (list_array_copy == NULL)
+		return (0);
+	i = 0;
+	while (i < num_count - 1)
+	{
+		if (list_array_copy[i]->num == list_array_copy[i + 1]->num)
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (i < num_count)
+	{
+		list_array_copy[i]->num = i;
+		i++;
+	}
+	free(list_array_copy);
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -208,11 +255,12 @@ int	main(int argc, char **argv)
 	t_stack			stack_b;
 
 	if (argc == 1)
-		return (1);
+		return (EXIT_SUCCESS);
 	size_t num_count = get_total_arg_count(argc - 1, argv + 1);
 	m_list_array = malloc(sizeof(*m_list_array) * num_count);
 	if (!m_list_array)
-		return (1);
+		return (EXIT_FAILURE);
+	op_vector_init(&m_vec_op, 16, m_list_array); // TODO: grow dynamicly with time
 	stack_a = stack_init('a', &m_vec_op);
 	stack_b = stack_init('b', &m_vec_op);
 	char **char_list = create_char_list(argc - 1, argv + 1, num_count);
@@ -222,33 +270,26 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	stack_a.list = lstd_create(m_list_array, num_count, char_list);
-	t_list_double **list_array_copy = malloc(sizeof(*list_array_copy) * num_count);
-	for (size_t i = 0; i < num_count; i++)
+	free(char_list);
+	if (stack_a.list == NULL)
 	{
-		list_array_copy[i] = &m_list_array[i];
+		write(1, "Error\n", 6);
+		op_vector_free(&m_vec_op);
+		free(m_list_array);
+		exit(EXIT_FAILURE);
 	}
-	ft_qsort(list_array_copy, num_count, sizeof(*list_array_copy), compar);
-	for (size_t i = 0; i < num_count - 1; i++)
+	if (!sort_and_verify_arg(m_list_array, num_count))
 	{
-		if (list_array_copy[i]->num == list_array_copy[i + 1]->num)
-		{
-			//TODO: FREE and exit program
-			return (EXIT_FAILURE);
-		}
+		write(1, "Error\n", 6);
+		free(m_list_array);
+		return (EXIT_FAILURE);
 	}
-	for (size_t i = 0; i < num_count; i++)
-	{
-		list_array_copy[i]->num = i;
-	}
-	free(list_array_copy);
-	op_vector_init(&m_vec_op, 20000); // TODO: grow dynamicly with time
 	if (stack_a.list)
 	{
 		quick_sort_a(&stack_a, &stack_b, num_count);
 		op_vector_applyf(&m_vec_op, &op_print);
 	}
 	op_vector_free(&m_vec_op);
-	free(char_list);
 	free(m_list_array);
 	return (0);
 }
