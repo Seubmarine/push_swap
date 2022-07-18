@@ -6,7 +6,7 @@
 #    By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 02:24:45 by tbousque          #+#    #+#              #
-#    Updated: 2022/07/18 17:24:07 by tbousque         ###   ########.fr        #
+#    Updated: 2022/07/18 17:35:28 by tbousque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS = $(addprefix ft_std/, $(SRCS_LIBFT)) \
 	$(addprefix main_sort/, $(SRCS_MAIN_SORT)) \
 	$(addprefix sort/, $(SRCS_SORT))\
 	$(addprefix ft_qsort/, $(SRCS_FT_QSORT))\
-	unit_test.c init.c
+	unit_test.c init.c init2.c
 OBJS = $(SRCS:%.c=%.o)
 
 $(NAME) : $(OBJS)
