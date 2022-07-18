@@ -6,22 +6,38 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:33:14 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 15:33:31 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 16:05:52 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main_sort.h"
 
+void	push_until(t_stack *a, t_stack *b, int len)
+{
+	while (len)
+	{
+		push(a, b);
+		len--;
+	}
+}
+
+void rot_rev_until(t_stack *x, int len, int stack_len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len - stack_len)
+	{
+		rot_rev(x);
+		i++;
+	}
+}
+
 void	quick_sort_a(t_stack *a, t_stack *b, int len);
 
+void	quick_sort_b_part_2(t_stack *a, t_stack *b, int len);
 void	quick_sort_b(t_stack *a, t_stack *b, int len)
 {
-	int			i;
-	int			a_len;
-	const int	median = get_median(b, len);
-
-	i = 1;
-	a_len = 0;
 	if (len == 3)
 	{
 		three_sort_b(a, b);
@@ -29,24 +45,26 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 	}
 	if (len <= 2)
 	{
-		while (len)
-		{
-			push(a, b);
-			len--;
-		}
+		push_until(a, b, len);
 		if (num(a) > num_pos(a, 1))
 			swap(a);
 		return ;
 	}
 	if (b_is_sorted(b, len))
 	{
-		while (len)
-		{
-			push(a, b);
-			len--;
-		}
+		push_until(a, b, len);
 		return ;
 	}
+	quick_sort_b_part_2(a, b, len);
+}
+void	quick_sort_b_part_2(t_stack *a, t_stack *b, int len)
+{
+	int			i;
+	int			a_len;
+	const int	median = get_median(b, len);
+
+	i = 1;
+	a_len = 0;
 	while (i <= len && b && num(b) != num_pos(b, 1))
 	{
 		if (num(b) <= median + 1)
@@ -62,23 +80,14 @@ void	quick_sort_b(t_stack *a, t_stack *b, int len)
 	i = 0;
 	if (num_pos(b, len - a_len) != num(b))
 	{
-		while (i < len - a_len)
-		{
-			rot_rev(b);
-			i++;
-		}
+		rot_rev_until(b, len, a_len);
 	}
 	quick_sort_b(a, b, len - a_len);
 }
 
+void	quick_sort_a_part_2(t_stack *a, t_stack *b, int len);
 void	quick_sort_a(t_stack *a, t_stack *b, int len)
 {
-	int			i;
-	int			b_len;
-	const int	median = get_median(a, len);
-
-	i = 1;
-	b_len = 0;
 	if (len == 3)
 	{	
 		three_sort_a(a, num(a), num_pos(a, 1), num_pos(a, 2));
@@ -92,6 +101,17 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 	}
 	if (a_is_sorted(a, len))
 		return ;
+	quick_sort_a_part_2(a, b, len);
+}
+
+void	quick_sort_a_part_2(t_stack *a, t_stack *b, int len)
+{
+	int			i;
+	int			b_len;
+	const int	median = get_median(a, len);
+
+	i = 1;
+	b_len = 0;
 	while (i <= len && a && num(a) != num_pos(a, 1))
 	{
 		if (num(a) > median)
@@ -106,11 +126,7 @@ void	quick_sort_a(t_stack *a, t_stack *b, int len)
 	i = 0;
 	if (num_pos(a, len - b_len) != num(a))
 	{
-		while (i < len - b_len)
-		{
-			rot_rev(a);
-			i++;
-		}
+		rot_rev_until(a, len, b_len);
 	}
 	quick_sort_a(a, b, len - b_len);
 	quick_sort_b(a, b, b_len);
