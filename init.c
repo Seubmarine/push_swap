@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 15:33:08 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 17:15:42 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**create_char_list(int argc, char **argv, size_t num_count)
 	char	**char_list;
 	size_t	i;
 	size_t	j;
-	char	*str;
+	size_t	char_i;
 
 	char_list = malloc(sizeof(*char_list) * num_count);
 	if (char_list == NULL)
@@ -63,27 +63,27 @@ char	**create_char_list(int argc, char **argv, size_t num_count)
 		ft_memcpy(char_list, argv, sizeof(*argv) * argc);
 		return (char_list);
 	}
-	str = *argv;
-	i = 0;
 	j = 0;
-	while (i < num_count)
+	char_i = 0;
+	while (num_count)
 	{
-		while (str[j] == ' ')
+		while ((*argv)[j] == ' ')
 			j++;
-		char_list[i] = str + j;
-		while (str[j] == '-' || (str[j] >= '0' && str[j] <= '9'))
+		i = j;
+		while ((*argv)[j] != ' ' && (*argv)[j] != '\0')
 			j++;
-		if (str[j] == '\0')
+		char_list[char_i++] = (*argv) + i;
+		if ((*argv)[j] == '\0')
 		{
+			argv++;
 			j = 0;
-			str = *(++argv);
 		}
 		else
 		{
-			str[j] = '\0';
+			(*argv)[j] = '\0';
 			j++;
 		}
-		i++;
+		num_count--;
 	}
 	return (char_list);
 }
@@ -97,9 +97,9 @@ int	compar(const void *a, const void *b)
 }
 
 //Return NULL if error
-//Will sort the list, find if theres any duplicate and replace number by their sorted index for better
-//median search
-t_list_double **create_sorted_list(t_list_double	*m_list_array, size_t num_count)
+//Will sort the list, find if theres any duplicate 
+//and replace number by their sorted index for better median search
+t_list_double	**create_sorted_list(t_list_double	*m_list_array, size_t num_count)
 {
 	t_list_double	**list_array_copy;
 	size_t			i;
@@ -118,11 +118,11 @@ t_list_double **create_sorted_list(t_list_double	*m_list_array, size_t num_count
 }
 
 // return 1 on success 0 on error
-int sort_and_verify_arg(t_list_double	*m_list_array, size_t num_count)
+int	sort_and_verify_arg(t_list_double	*m_list_array, size_t num_count)
 {
-	size_t i;
-	t_list_double **list_array_copy;
-	
+	size_t			i;
+	t_list_double	**list_array_copy;
+
 	list_array_copy = create_sorted_list(m_list_array, num_count);
 	if (list_array_copy == NULL)
 		return (0);
@@ -130,7 +130,10 @@ int sort_and_verify_arg(t_list_double	*m_list_array, size_t num_count)
 	while (i < num_count - 1)
 	{
 		if (list_array_copy[i]->num == list_array_copy[i + 1]->num)
+		{
+			free(list_array_copy);
 			return (0);
+		}
 		i++;
 	}
 	i = 0;
@@ -156,12 +159,13 @@ int	main(int argc, char **argv)
 	m_list_array = malloc(sizeof(*m_list_array) * num_count);
 	if (!m_list_array)
 		return (EXIT_FAILURE);
-	op_vector_init(&m_vec_op, 16, m_list_array); // TODO: grow dynamicly with time
+	op_vector_init(&m_vec_op, 16, m_list_array);
 	stack_a = stack_init('a', &m_vec_op);
 	stack_b = stack_init('b', &m_vec_op);
 	char **char_list = create_char_list(argc - 1, argv + 1, num_count);
 	if (char_list == NULL)
 	{
+		op_vector_free(&m_vec_op);
 		free(m_list_array);
 		return (EXIT_FAILURE);
 	}
@@ -177,6 +181,7 @@ int	main(int argc, char **argv)
 	if (!sort_and_verify_arg(m_list_array, num_count))
 	{
 		write(1, "Error\n", 6);
+		op_vector_free(&m_vec_op);
 		free(m_list_array);
 		return (EXIT_FAILURE);
 	}
