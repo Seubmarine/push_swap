@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 23:40:35 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 14:53:06 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/18 18:27:39 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	op_vector_grow(t_op_vector *vec)
 		if (tmp == NULL)
 		{
 			free(vec->to_free);
+			op_vector_free(vec);
 			exit(EXIT_FAILURE);
 		}
 		ft_memcpy(tmp, vec->array, sizeof(*vec->array) * vec->len);
