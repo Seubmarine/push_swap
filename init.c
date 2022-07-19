@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 15:33:04 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/18 18:33:05 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/19 11:35:31 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_print_error_and_exit(void *to_free)
 {
 	if (to_free != NULL)
 		free(to_free);
-	write(1, "Error\n", 6);
+	write(STDOUT_FILENO, "Error\n", 6);
 	exit(EXIT_FAILURE);
 }
 
