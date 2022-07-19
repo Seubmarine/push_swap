@@ -6,30 +6,14 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 09:36:36 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/19 15:03:35 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:21:08 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-enum e_checker_err
-{
-	checker_malloc,
-	no_arg,
-	arg_is_incorrect,
-	arg_is_duplicate,
-	no_error,
-};
-
-typedef struct s_checker_result
-{
-	enum e_checker_err	err;
-	t_list_double		*ok;
-} t_checker_result;
-
-
-
-t_checker_result	free_and_error(void *to_free, enum e_checker_err error, t_checker_result *result)
+t_checker_result	free_and_error(void *to_free, enum e_checker_err error, \
+	t_checker_result *result)
 {
 	if (to_free != NULL)
 		free(to_free);
@@ -38,7 +22,7 @@ t_checker_result	free_and_error(void *to_free, enum e_checker_err error, t_check
 	return (*result);
 }
 
-t_checker_result	create_and_verify_list_bonus(int argc, char **argv, 
+t_checker_result	create_and_verify_list_bonus(int argc, char **argv, \
 	const size_t num_count)
 {
 	char				**char_list;
@@ -47,35 +31,23 @@ t_checker_result	create_and_verify_list_bonus(int argc, char **argv,
 
 	result.err = no_error;
 	if (num_count == 0)
-		return(free_and_error(NULL, no_arg, &result));
+		return (free_and_error(NULL, no_arg, &result));
 	char_list = create_char_list(argc - 1, argv + 1, num_count);
 	if (char_list == NULL)
-		return(free_and_error(NULL, checker_malloc, &result));
+		return (free_and_error(NULL, checker_malloc, &result));
 	m_list_array = malloc(sizeof(*m_list_array) * num_count);
 	if (!m_list_array)
-		return(free_and_error(char_list, checker_malloc, &result));
+		return (free_and_error(char_list, checker_malloc, &result));
 	if (lstd_create(m_list_array, num_count, char_list) == NULL)
 	{
 		free(char_list);
-		return(free_and_error(m_list_array, arg_is_incorrect, &result));
+		return (free_and_error(m_list_array, arg_is_incorrect, &result));
 	}
 	free(char_list);
 	if (!sort_and_verify_arg(m_list_array, num_count))
-		return(free_and_error(m_list_array, arg_is_duplicate, &result));
+		return (free_and_error(m_list_array, arg_is_duplicate, &result));
 	result.ok = m_list_array;
 	return (result);
-}
-
-int	ft_strncmp(const char *str1, const char *str2, size_t n)
-{
-	size_t	i;
-
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (str1[i] == str2[i] && i < n - 1 && str1[i] && str2[i])
-		i++;
-	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 }
 
 //return 1 on correct input
@@ -113,7 +85,7 @@ int	checker(t_stack *a, t_stack *b, size_t num_count)
 {
 	char	*line;
 	size_t	i;
-	int is_error;
+	int		is_error;
 
 	while (1)
 	{
@@ -138,14 +110,17 @@ int	checker(t_stack *a, t_stack *b, size_t num_count)
 	return (1);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	const size_t			num_count = get_total_arg_count(argc - 1, argv + 1);
-	const t_checker_result	result = create_and_verify_list_bonus(argc, argv, num_count);
+	const t_checker_result	result = create_and_verify_list_bonus(argc, argv, \
+		num_count);
 	t_stack					stack_a;
 	t_stack					stack_b;
 	t_op_vector				m_vec_op;
 
+	if (num_count == 0)
+		write(STDOUT_FILENO, "OK\n", 3);
 	if (result.ok == NULL)
 	{
 		write(STDERR_FILENO, "Error\n", 6);

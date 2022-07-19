@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.h                                          :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/19 09:37:00 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/19 15:18:06 by tbousque         ###   ########.fr       */
+/*   Created: 2022/07/19 15:20:35 by tbousque          #+#    #+#             */
+/*   Updated: 2022/07/19 15:20:46 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECKER_H
-# define CHECKER_H
-# include "push_swap.h"
-# include "get_next_line.h"
+#include "libft_bonus.h"
 
-enum e_checker_err
+int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
-	checker_malloc,
-	no_arg,
-	arg_is_incorrect,
-	arg_is_duplicate,
-	no_error,
-};
+	size_t	i;
 
-typedef struct s_checker_result
-{
-	enum e_checker_err	err;
-	t_list_double		*ok;
-}	t_checker_result;
-#endif
+	if (n == 0)
+		return (0);
+	i = 0;
+	while (str1[i] == str2[i] && i < n - 1 && str1[i] && str2[i])
+		i++;
+	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+}
