@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.h                                          :+:      :+:    :+:   */
+/*   give_input_at_zero.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/19 09:37:00 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/19 18:13:18 by tbousque         ###   ########.fr       */
+/*   Created: 2022/07/19 18:08:51 by tbousque          #+#    #+#             */
+/*   Updated: 2022/07/19 18:15:06 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECKER_H
-# define CHECKER_H
-# include "push_swap.h"
-# include "get_next_line.h"
+#include "checker.h"
 
-enum e_checker_err
+void	give_input_at_zero(size_t num_count)
 {
-	checker_malloc,
-	no_arg,
-	arg_is_incorrect,
-	arg_is_duplicate,
-	no_error,
-};
+	char	*line;
 
-typedef struct s_checker_result
-{
-	enum e_checker_err	err;
-	t_list_double		*ok;
-}	t_checker_result;
-
-void	give_input_at_zero(size_t num_count);
-#endif
+	if (num_count == 0)
+	{
+		line = get_next_line(STDIN_FILENO);
+		if (line)
+		{
+			free(line);
+			write(STDERR_FILENO, "Error\n", 6);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			write(STDOUT_FILENO, "Ok\n", 3);
+			exit(EXIT_SUCCESS);
+		}
+	}
+}

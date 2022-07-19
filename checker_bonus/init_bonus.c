@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 09:36:36 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/19 15:21:08 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/19 18:11:47 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ int	main(int argc, char *argv[])
 	t_stack					stack_b;
 	t_op_vector				m_vec_op;
 
-	if (num_count == 0)
-		write(STDOUT_FILENO, "OK\n", 3);
+	give_input_at_zero(num_count);
 	if (result.ok == NULL)
 	{
 		write(STDERR_FILENO, "Error\n", 6);

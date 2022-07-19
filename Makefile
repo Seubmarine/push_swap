@@ -6,7 +6,7 @@
 #    By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 02:24:45 by tbousque          #+#    #+#              #
-#    Updated: 2022/07/19 15:21:33 by tbousque         ###   ########.fr        #
+#    Updated: 2022/07/19 18:12:27 by tbousque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ OBJS = $(SRCS:%.c=%.o)
 $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
  
-SRCS_CHECKER_BONUS = init_bonus.c get_next_line.c libft_bonus.c ft_strncmp.c
+SRCS_CHECKER_BONUS = init_bonus.c get_next_line.c libft_bonus.c ft_strncmp.c give_input_at_zero.c
 
 SRCS_BONUS = $(addprefix ft_std/, $(SRCS_LIBFT)) \
 	$(addprefix list_double/, $(SRCS_DOUBLE_LIST)) \
