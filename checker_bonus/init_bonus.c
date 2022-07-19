@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 09:36:36 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/19 14:51:25 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/19 15:03:35 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,6 @@ t_checker_result	create_and_verify_list_bonus(int argc, char **argv,
 	return (result);
 }
 
-// void treat_error(t_checker_result result)
-// {
-// 	if (result.err == no_error)
-// 		return ;
-// 	if (result.err == no_arg)
-
-// 	write(STDERR_FILENO, "Error: ", 8);
-// 	write(STDERR_FILENO, "\n", 1);
-// }
-
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
 	size_t	i;
@@ -88,9 +78,8 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 }
 
-#include <stdio.h>
-
-void	process_input(char *line, t_stack *a, t_stack *b)
+//return 1 on correct input
+int	process_input(char *line, t_stack *a, t_stack *b)
 {
 	if (!ft_strncmp(line, "sa", 2))
 		swap(a);
@@ -114,59 +103,38 @@ void	process_input(char *line, t_stack *a, t_stack *b)
 		rot_rot_rev(a, b);
 	else if (!ft_strncmp(line, "rr", 2))
 		rot_rot(a, b);
+	else
+		return (0);
+	return (1);
 }
-
-void	test_next(t_list_double *l)
-{
-	t_list_double	*first_chain;
-
-	first_chain = l;
-	if (!l)
-	{
-		printf("Stack empty!\n");
-		return ;
-	}
-	while (1)
-	{
-		printf("%s ", l->num_str);
-		l = l->next;
-		if (l == first_chain)
-			break ;
-	}
-	printf("\n");
-	return ;
-}
-
 
 //return 1 on success 0 on error
 int	checker(t_stack *a, t_stack *b, size_t num_count)
 {
 	char	*line;
 	size_t	i;
-	t_list_double *current;
+	int is_error;
 
 	while (1)
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (line == NULL)
 			break ;
-		process_input(line, a, b);
+		is_error = !(process_input(line, a, b));
 		free(line);
+		if (is_error)
+			return (0);
 	}
 	if (b->list != NULL)
 		return (0);
 	i = 0;
-	current = a->list;
-	while (i < num_count - 1)
+	while (a->list->num < a->list->next->num)
 	{
-		if (current->num < current->next->num)
-		{
-			current = current->next;
-			i++;
-		}
-		else
-			return (0);
+		a->list = a->list->next;
+		i++;
 	}
+	if (i < num_count - 1)
+		return (0);
 	return (1);
 }
 
@@ -178,6 +146,11 @@ int main(int argc, char *argv[])
 	t_stack					stack_b;
 	t_op_vector				m_vec_op;
 
+	if (result.ok == NULL)
+	{
+		write(STDERR_FILENO, "Error\n", 6);
+		return (EXIT_FAILURE);
+	}
 	op_vector_init(&m_vec_op, 16, result.ok);
 	stack_a = stack_init('a', &m_vec_op);
 	stack_b = stack_init('b', &m_vec_op);
