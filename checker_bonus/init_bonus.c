@@ -6,7 +6,7 @@
 /*   By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/19 09:36:36 by tbousque          #+#    #+#             */
-/*   Updated: 2022/07/19 12:47:56 by tbousque         ###   ########.fr       */
+/*   Updated: 2022/07/19 14:51:25 by tbousque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,31 @@ void	process_input(char *line, t_stack *a, t_stack *b)
 		rot_rev(b);
 	else if (!ft_strncmp(line, "rrr", 3))
 		rot_rot_rev(a, b);
+	else if (!ft_strncmp(line, "rr", 2))
+		rot_rot(a, b);
 }
+
+void	test_next(t_list_double *l)
+{
+	t_list_double	*first_chain;
+
+	first_chain = l;
+	if (!l)
+	{
+		printf("Stack empty!\n");
+		return ;
+	}
+	while (1)
+	{
+		printf("%s ", l->num_str);
+		l = l->next;
+		if (l == first_chain)
+			break ;
+	}
+	printf("\n");
+	return ;
+}
+
 
 //return 1 on success 0 on error
 int	checker(t_stack *a, t_stack *b, size_t num_count)
@@ -159,9 +183,10 @@ int main(int argc, char *argv[])
 	stack_b = stack_init('b', &m_vec_op);
 	stack_a.list = result.ok;
 	if (checker(&stack_a, &stack_b, num_count))
-		write(STDIN_FILENO, "OK\n", 3);
+		write(STDOUT_FILENO, "OK\n", 3);
 	else
-		write(STDIN_FILENO, "KO\n", 3);
-	
+		write(STDOUT_FILENO, "KO\n", 3);
+	op_vector_free(&m_vec_op);
+	free(result.ok);
 	return (EXIT_SUCCESS);
 }
