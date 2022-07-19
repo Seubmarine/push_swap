@@ -6,7 +6,7 @@
 #    By: tbousque <tbousque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/07 02:24:45 by tbousque          #+#    #+#              #
-#    Updated: 2022/07/19 18:12:27 by tbousque         ###   ########.fr        #
+#    Updated: 2022/07/19 18:18:46 by tbousque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,9 +61,11 @@ all : $(NAME)
 
 clean :
 	$(RM) $(OBJS)
+	$(RM) $(OBJS_BONUS)
 
 fclean : clean
 	$(RM) $(NAME)
+	$(RM) $(BONUS)
 
 re : fclean all
 
